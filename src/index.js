@@ -66,6 +66,7 @@ function Square(props) {
         this.setState({
             history: history.concat([{
                 squares: squares,
+                coordinate: Math.floor(i/3) + ',' + i % 3 ,
             }]),
             stepNumber: history.length,
             xIsNext: !this.state.xIsNext,
@@ -86,11 +87,14 @@ function Square(props) {
 
         const moves = history.map((step, move) => {
             const desc = move ?
-            'Go to move #' + move :
+            'Go to move #' + move + ('history: (' + step.coordinate + ')' ):
             'Go to game start';
+        
+        const fontWeight = this.state.stepNumber === move ? 'bold' : 'normal';
+
             return (
                 <li key = {move}>
-                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                    <button style = {{fontWeight}} onClick={() => this.jumpTo(move)}>{desc}</button>
                 </li>
             );
         });
